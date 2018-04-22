@@ -42,7 +42,7 @@ public class BaseDatosUsuarios {
     }
     
 
-    
+    //To string
     @Override
     public String toString() {
         return "BaseDatosUsuarios{" + "usuarios=" + usuarios + '}';
