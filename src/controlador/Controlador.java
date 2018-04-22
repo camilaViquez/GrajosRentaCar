@@ -20,17 +20,17 @@ public class Controlador implements ActionListener {
     private Usuario usuario = new Usuario();
     private VistaLogIn vistaLogIn = new VistaLogIn();
     private VistaRegistro vistaRegistro = new VistaRegistro();
-    public BaseDatosUsuarios bdUsuarios = new BaseDatosUsuarios();
+    //public ArrayList<Usuario> uList = new ArrayList();
 
     
     
     
 
-    public Controlador(Usuario usuario, VistaLogIn vistaLogIn, VistaRegistro vistaRegistro, BaseDatosUsuarios bdUsuario) {
+    public Controlador(Usuario usuario, VistaLogIn vistaLogIn, VistaRegistro vistaRegistro) {
         this.usuario = usuario;
         this.vistaLogIn = vistaLogIn;
         this.vistaRegistro = vistaRegistro;
-        this.bdUsuarios = bdUsuarios;
+
     }
     
     //FUncion para inicializar la ventana principal
@@ -60,6 +60,7 @@ public class Controlador implements ActionListener {
         });
         //registara nuevo usuario
         this.vistaRegistro.btn_registrar.addActionListener(new ActionListener(){
+            //ArrayList<Usuario> uList = new ArrayList();
             @Override
             public void actionPerformed(ActionEvent e) {
                 String nombre = vistaRegistro.txt_nombre.getText().toString();
@@ -67,17 +68,22 @@ public class Controlador implements ActionListener {
                 String contrasena = vistaRegistro.txt_contrasena.getText().toString();
                 String tipo = vistaRegistro.jComboBox1.getSelectedItem().toString();
                 //Crear nuevo usuario
-                Usuario usr = new Usuario(nombre, usuario, contrasena,tipo);
                 ArrayList<Usuario> uList = new ArrayList();
+                Usuario usr = new Usuario(nombre, usuario, contrasena,tipo);
                 uList.add(usr);
-                bdUsuarios.setUsuarios(uList); 
-                for (int i = 0; i < uList.size(); i++) {
-                    System.out.println(uList.toString());
+                BaseDatosUsuarios bd = BaseDatosUsuarios.getSingletonInstance(usr);
+
+                for (int i = 0; i < bd.getUsuarios().size(); i++) {
+                    System.out.println(bd.getUsuarios().toString());
    
                     }
+
          
             }
+          
         });
+
+        
     }
 
    
