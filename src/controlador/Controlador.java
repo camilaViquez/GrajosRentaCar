@@ -7,10 +7,14 @@ package controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import modelo.Usuario;
 import modelo.BaseDatosUsuarios;
 import vista.VistaLogIn;
 import vista.VistaRegistro;
+import vista.VistaAdministrador;
+import vista.VistaCrearCliente;
+import vista.VistaCajero;
 
 /**
  *
@@ -20,16 +24,22 @@ public class Controlador implements ActionListener {
     private Usuario usuario = new Usuario();
     private VistaLogIn vistaLogIn = new VistaLogIn();
     private VistaRegistro vistaRegistro = new VistaRegistro();
+    private VistaAdministrador vistaAdministrador = new VistaAdministrador();
+    private VistaCrearCliente vistaCrearCliente = new VistaCrearCliente();
+    private VistaCajero vistaCajero = new VistaCajero();
     //public ArrayList<Usuario> uList = new ArrayList();
 
     
     
     
 
-    public Controlador(Usuario usuario, VistaLogIn vistaLogIn, VistaRegistro vistaRegistro) {
+    public Controlador(Usuario usuario, VistaLogIn vistaLogIn, VistaRegistro vistaRegistro, VistaAdministrador vistaAdministrador, VistaCrearCliente vistaCrearCliente, VistaCajero vistaCajero) {
         this.usuario = usuario;
         this.vistaLogIn = vistaLogIn;
         this.vistaRegistro = vistaRegistro;
+        this.vistaAdministrador = vistaAdministrador;
+        this.vistaCrearCliente = vistaCrearCliente;
+        this.vistaCajero = vistaCajero;
 
     }
     
@@ -58,18 +68,33 @@ public class Controlador implements ActionListener {
             }
             
         });
-        //registara nuevo usuario
+        //volver a logIn
+        this.vistaRegistro.btn_volver.addActionListener(new ActionListener(){
+            @Override
+            //Abrir ventana logIn
+            public void actionPerformed(ActionEvent e) {
+                vistaLogIn.setTitle("Log in");
+                vistaLogIn.setLocationRelativeTo(null);
+                vistaRegistro.invalidate();
+                vistaLogIn.isValidateRoot();
+                vistaRegistro.setVisible(false);
+                vistaLogIn.setVisible(true);
+            }
+            
+        });
+        //registar nuevo usuario
         this.vistaRegistro.btn_registrar.addActionListener(new ActionListener(){
-            //ArrayList<Usuario> uList = new ArrayList();
+
             @Override
             public void actionPerformed(ActionEvent e) {
+               try{
                 String nombre = vistaRegistro.txt_nombre.getText().toString();
                 String usuario = vistaRegistro.txt_usuario.getText().toString();
                 String contrasena = vistaRegistro.txt_contrasena.getText().toString();
                 String tipo = vistaRegistro.jComboBox1.getSelectedItem().toString();
                 //Crear nuevo usuario
                 ArrayList<Usuario> uList = new ArrayList();
-                Usuario usr = new Usuario(nombre, usuario, contrasena,tipo);
+                Usuario usr = new Usuario(nombre,"","","", usuario, contrasena,tipo);
                 uList.add(usr);
                 BaseDatosUsuarios bd = BaseDatosUsuarios.getSingletonInstance(usr);
 
@@ -77,19 +102,135 @@ public class Controlador implements ActionListener {
                     System.out.println(bd.getUsuarios().toString());
    
                     }
-
          
-            }
+            }catch(Exception ex){
+                    JOptionPane.showMessageDialog(vistaRegistro, "Error verify the data");
+              }
+            } 
           
         });
+        
+        //Boton iniciar sesion
+        this.vistaLogIn.btn_iniciarSesion.addActionListener(new ActionListener(){
+            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String usuario = vistaLogIn.txt_usuario.getText().toString();
+                String contrasena = vistaLogIn.txt_contrasena.getText().toString();
+                
+                BaseDatosUsuarios db = BaseDatosUsuarios.getDbUsuario();
+                ArrayList<Usuario> listaUsr = new ArrayList();
+                listaUsr = db.getUsuarios();
+                System.out.println("lista: "+listaUsr.toString());
+                
+               // usuario valido
+                for(Usuario u: listaUsr){
+                    //Validar administrador
+                        if(contrasena.equals(u.getContrasena())){
+                            System.out.println("tipo: "+u.getTipo());
+                            if(u.getTipo().toString()== "Administrador"){
+                                mostrarVistaAdministrador();
+                                
+                            }else{
+                                if(u.getTipo().toString()== "Cajero"){
+                                    mostrarVistaCajero();
+                                }
+                            }
+                            
+                        }else{
+                            JOptionPane.showMessageDialog(vistaRegistro, "Error la contraseña o el usuario son incorrectos");
+                            
+                        }
+                    
+                }
+                
+            }
+            
+            
+        });
+        
+       
 
         
     }
-
-   
+    //Mostrar ventana del administrados
+    public void mostrarVistaAdministrador(){
+        //Mostrar ventana nueva ocultar anterior
+        vistaAdministrador.setTitle("sesion Administrador");
+        vistaAdministrador.setLocationRelativeTo(null);
+        vistaLogIn.invalidate();
+        vistaAdministrador.isValidateRoot();
+        vistaLogIn.setVisible(false);
+        vistaAdministrador.setVisible(true);
+        
+        // volver a ventana log in
+        vistaAdministrador.btn_volver.addActionListener(new ActionListener(){
+            @Override
+            //Abrir ventana logIn
+            public void actionPerformed(ActionEvent e) {
+                vistaLogIn.setTitle("Log in");
+                vistaLogIn.setLocationRelativeTo(null);
+                vistaAdministrador.invalidate();
+                vistaLogIn.isValidateRoot();
+                vistaAdministrador.setVisible(false);
+                vistaLogIn.setVisible(true);
+            }
+            
+        });
+        
+        //variables de ventana
+        
+        }
     
     
-    
+    public void mostrarVistaCajero(){
+        //Abrir ventana cajero
+        vistaCajero.setTitle("Sesion Cajero");
+        vistaCajero.setLocationRelativeTo(null);
+        vistaLogIn.invalidate();
+        vistaCajero.isValidateRoot();
+        vistaLogIn.setVisible(false);
+        vistaCajero.setVisible(true);
+        
+        //boton volver al logIn
+         vistaCajero.btn_volver.addActionListener(new ActionListener(){
+            @Override
+            //Abrir ventana logIn
+            public void actionPerformed(ActionEvent e) {
+                vistaLogIn.setTitle("Log in");
+                vistaLogIn.setLocationRelativeTo(null);
+                vistaCajero.invalidate();
+                vistaLogIn.isValidateRoot();
+                vistaCajero.setVisible(false);
+                vistaLogIn.setVisible(true);
+                
+            }
+            
+        });
+         
+         
+         
+         //Boton crear cliente
+          this.vistaCajero.btn_crearCliente.addActionListener(new ActionListener(){
+            @Override
+            //Abrir ventana logIn
+            public void actionPerformed(ActionEvent e) {
+                vistaCrearCliente.setTitle("Crear Cliente");
+                vistaCrearCliente.setLocationRelativeTo(null);
+                vistaCajero.invalidate();
+                vistaCrearCliente.isValidateRoot();
+                vistaCajero.setVisible(false);
+                vistaCrearCliente.setVisible(true);
+            }
+            
+        });
+         
+        //variables para registrar cliente
+        String nombre = this.vistaCrearCliente.txt_nombre.getText().toString();
+        String apellido1 = this.vistaCrearCliente.txt_apellido1.getText().toString();
+        String apellido2 = this.vistaCrearCliente.txt_apellido2.getText().toString();
+        
+    }
     
 
     @Override
