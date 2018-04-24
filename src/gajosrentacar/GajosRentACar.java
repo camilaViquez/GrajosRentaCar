@@ -7,6 +7,7 @@ import modelo.Usuario;
 import vista.VistaAdministrador;
 import vista.VistaCrearCliente;
 import vista.VistaCajero;
+import vista.VistaAuditor;
 
 public class GajosRentACar {
 
@@ -16,6 +17,7 @@ public class GajosRentACar {
         VistaAdministrador vistaAdministrador = new VistaAdministrador();
         VistaCrearCliente vistaCrearCliente = new VistaCrearCliente();
         VistaCajero vistaCajero = new VistaCajero();
+        VistaAuditor vistaAuditor = new VistaAuditor();
         
         
         /*String nombre = "Carlos";
@@ -27,7 +29,7 @@ public class GajosRentACar {
         
    
         //LLamar a ventana LogIn
-        Controlador crlt = new Controlador(usuario, vistaLogIn, vistaRegistro, vistaAdministrador, vistaCrearCliente, vistaCajero);
+        Controlador crlt = new Controlador(usuario, vistaLogIn, vistaRegistro, vistaAdministrador, vistaCrearCliente, vistaCajero, vistaAuditor);
         crlt.inialitacion();
         vistaLogIn.setVisible(true);
     }

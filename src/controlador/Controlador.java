@@ -18,6 +18,7 @@ import vista.VistaRegistro;
 import vista.VistaAdministrador;
 import vista.VistaCrearCliente;
 import vista.VistaCajero;
+import vista.VistaAuditor;
 
 /**
  *
@@ -30,19 +31,20 @@ public class Controlador implements ActionListener {
     private VistaAdministrador vistaAdministrador = new VistaAdministrador();
     private VistaCrearCliente vistaCrearCliente = new VistaCrearCliente();
     private VistaCajero vistaCajero = new VistaCajero();
-    //public ArrayList<Usuario> uList = new ArrayList();
+    private VistaAuditor vistaAuditor = new VistaAuditor();
 
     
     
     
 
-    public Controlador(Usuario usuario, VistaLogIn vistaLogIn, VistaRegistro vistaRegistro, VistaAdministrador vistaAdministrador, VistaCrearCliente vistaCrearCliente, VistaCajero vistaCajero) {
+    public Controlador(Usuario usuario, VistaLogIn vistaLogIn, VistaRegistro vistaRegistro, VistaAdministrador vistaAdministrador, VistaCrearCliente vistaCrearCliente, VistaCajero vistaCajero, VistaAuditor vistaAuditor) {
         this.usuario = usuario;
         this.vistaLogIn = vistaLogIn;
         this.vistaRegistro = vistaRegistro;
         this.vistaAdministrador = vistaAdministrador;
         this.vistaCrearCliente = vistaCrearCliente;
         this.vistaCajero = vistaCajero;
+        this.vistaAuditor = vistaAuditor;
 
     }
     
@@ -112,6 +114,12 @@ public class Controlador implements ActionListener {
             }catch(Exception ex){
                     JOptionPane.showMessageDialog(vistaRegistro, "Error verifique los datos ingresados");
               }
+               vistaRegistro.txt_nombre.setText(null);
+               vistaRegistro.txt_apellido1.setText(null);
+               vistaRegistro.txt_apellido2.setText(null);
+               vistaRegistro.txt_correo.setText(null);
+               vistaRegistro.txt_usuario.setText(null);
+               vistaRegistro.txt_contrasena.setText(null);
             } 
           
         });
@@ -121,34 +129,42 @@ public class Controlador implements ActionListener {
             
             @Override
             public void actionPerformed(ActionEvent e) {
-                String usuario = vistaLogIn.txt_usuario.getText().toString();
-                String contrasena = vistaLogIn.txt_contrasena.getText().toString();
-                
-                BaseDatosUsuarios db = BaseDatosUsuarios.getDbUsuario();
-                ArrayList<Usuario> listaUsr = new ArrayList();
-                listaUsr = db.getUsuarios();
-                System.out.println("lista: "+listaUsr.toString());
-                
-               // usuario valido
-                for(Usuario u: listaUsr){
-                    //Validar administrador
-                        if(contrasena.equals(u.getContrasena())){
-                            System.out.println("tipo: "+u.getTipo());
-                            if(u.getTipo().toString()== "Administrador"){
-                                mostrarVistaAdministrador();
-                                
-                            }else{
-                                if(u.getTipo().equals("Cajero")){
-                                    mostrarVistaCajero();
+                try{
+                    String usuario = vistaLogIn.txt_usuario.getText().toString();
+                    String contrasena = vistaLogIn.txt_contrasena.getText().toString();
+
+                    BaseDatosUsuarios db = BaseDatosUsuarios.getDbUsuario();
+                    ArrayList<Usuario> listaUsr = new ArrayList();
+                    listaUsr = db.getUsuarios();
+                    System.out.println("lista: "+listaUsr.toString());
+
+                   // usuario valido
+                    for(Usuario u: listaUsr){
+                        //Validar administrador
+                            if(contrasena.equals(u.getContrasena())){
+                                System.out.println("tipo: "+u.getTipo());
+                                if(u.getTipo().toString()== "Administrador"){
+                                    mostrarVistaAdministrador();
+                                }else{
+                                    if(u.getTipo().equals("Cajero")){
+                                        mostrarVistaCajero();
+                                    }else{
+                                        if(u.getTipo().equals("Auditor")){
+                                            mostrarVistaAuditor();
+                                        }
+                                    }
                                 }
+
+
+
                             }
-                            
-                        
-                            
-                        }
-                    
-                }
-                
+
+                    }
+                }catch(Exception ex){
+                    JOptionPane.showMessageDialog(vistaRegistro, "Error verifique los datos ingresados");
+              }
+                vistaLogIn.txt_usuario.setText(null);
+                vistaLogIn.txt_contrasena.setText(null);
             }
             
             
@@ -156,6 +172,33 @@ public class Controlador implements ActionListener {
         
        
 
+        
+    }
+    //Mostarar ventana de Auditor
+    public void mostrarVistaAuditor(){
+         //Mostrar ventana nueva ocultar anterior
+        vistaAuditor.setTitle("Sesion Auditor");
+        vistaAuditor.setLocationRelativeTo(null);
+        vistaLogIn.invalidate();
+        vistaAuditor.isValidateRoot();
+        vistaLogIn.setVisible(false);
+        vistaAuditor.setVisible(true);
+        
+        //volver a logIn
+          vistaAuditor.btn_volver.addActionListener(new ActionListener(){
+            @Override
+            //Abrir ventana logIn
+            public void actionPerformed(ActionEvent e) {
+                vistaLogIn.setTitle("Log in");
+                vistaLogIn.setLocationRelativeTo(null);
+                vistaAuditor.invalidate();
+                vistaLogIn.isValidateRoot();
+                vistaAuditor.setVisible(false);
+                vistaLogIn.setVisible(true);
+            }
+            
+        });
+        
         
     }
     //Mostrar ventana del administrados
@@ -274,7 +317,12 @@ public class Controlador implements ActionListener {
                 }catch(Exception ex){
                             JOptionPane.showMessageDialog(vistaCrearCliente, "Error verifique los datos ingresados");
                 }
-                
+                vistaCrearCliente.txt_nombre.setText(null);
+                vistaCrearCliente.txt_apellido1.setText(null);
+                vistaCrearCliente.txt_apellido2.setText(null);
+                vistaCrearCliente.txt_correo.setText(null);
+                vistaCrearCliente.txt_usuario.setText(null);
+                vistaCrearCliente.txt_contrasena.setText(null);
             }
             
         });

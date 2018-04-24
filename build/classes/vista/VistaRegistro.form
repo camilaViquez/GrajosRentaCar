@@ -74,47 +74,38 @@
                                   <Component id="btn_volver" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jComboBox1" min="-2" pref="110" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="txt_apellido1" max="32767" attributes="0"/>
-                                          <Component id="txt_apellido2" pref="110" max="32767" attributes="0"/>
-                                      </Group>
-                                  </Group>
+                                  <Component id="jComboBox1" min="-2" pref="110" max="-2" attributes="0"/>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="txt_nombre" min="-2" pref="110" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-                          <Component id="txt_contrasena" min="-2" pref="107" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="txt_nombre" pref="110" max="32767" attributes="0"/>
+                              <Component id="txt_apellido1" pref="110" max="32767" attributes="0"/>
+                              <Component id="txt_apellido2" alignment="1" pref="110" max="32767" attributes="0"/>
+                              <Component id="txt_correo" alignment="1" pref="110" max="32767" attributes="0"/>
+                              <Component id="txt_usuario" alignment="1" max="32767" attributes="0"/>
+                              <Component id="txt_contrasena" alignment="1" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="Usuario" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" pref="269" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                          <EmptySpace pref="273" max="32767" attributes="0"/>
                       </Group>
                   </Group>
-                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                      <Component id="txt_correo" pref="110" max="32767" attributes="0"/>
-                      <Component id="txt_usuario" max="32767" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
