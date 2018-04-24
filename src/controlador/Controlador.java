@@ -6,7 +6,10 @@
 package controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.Usuario;
 import modelo.BaseDatosUsuarios;
@@ -89,12 +92,15 @@ public class Controlador implements ActionListener {
             public void actionPerformed(ActionEvent e) {
                try{
                 String nombre = vistaRegistro.txt_nombre.getText().toString();
+                String apellido1 = vistaRegistro.txt_apellido1.getText().toString();
+                String apellido2 = vistaRegistro.txt_apellido2.getText().toString();
+                String correo = vistaRegistro.txt_correo.getText().toString();
                 String usuario = vistaRegistro.txt_usuario.getText().toString();
                 String contrasena = vistaRegistro.txt_contrasena.getText().toString();
                 String tipo = vistaRegistro.jComboBox1.getSelectedItem().toString();
                 //Crear nuevo usuario
                 ArrayList<Usuario> uList = new ArrayList();
-                Usuario usr = new Usuario(nombre,"","","", usuario, contrasena,tipo);
+                Usuario usr = new Usuario(nombre,apellido1,apellido2,correo, usuario, contrasena,tipo);
                 uList.add(usr);
                 BaseDatosUsuarios bd = BaseDatosUsuarios.getSingletonInstance(usr);
 
@@ -104,7 +110,7 @@ public class Controlador implements ActionListener {
                     }
          
             }catch(Exception ex){
-                    JOptionPane.showMessageDialog(vistaRegistro, "Error verify the data");
+                    JOptionPane.showMessageDialog(vistaRegistro, "Error verifique los datos ingresados");
               }
             } 
           
@@ -132,13 +138,12 @@ public class Controlador implements ActionListener {
                                 mostrarVistaAdministrador();
                                 
                             }else{
-                                if(u.getTipo().toString()== "Cajero"){
+                                if(u.getTipo().equals("Cajero")){
                                     mostrarVistaCajero();
                                 }
                             }
                             
-                        }else{
-                            JOptionPane.showMessageDialog(vistaRegistro, "Error la contraseña o el usuario son incorrectos");
+                        
                             
                         }
                     
@@ -213,7 +218,7 @@ public class Controlador implements ActionListener {
          //Boton crear cliente
           this.vistaCajero.btn_crearCliente.addActionListener(new ActionListener(){
             @Override
-            //Abrir ventana logIn
+            //Abrir ventana crearCliente
             public void actionPerformed(ActionEvent e) {
                 vistaCrearCliente.setTitle("Crear Cliente");
                 vistaCrearCliente.setLocationRelativeTo(null);
@@ -224,12 +229,57 @@ public class Controlador implements ActionListener {
             }
             
         });
+          //Boton volver vista cajero
+          this.vistaCrearCliente.btn_volver.addActionListener(new ActionListener(){
+            @Override
+            //Abrir ventana crearCliente
+            public void actionPerformed(ActionEvent e) {
+                vistaCajero.setTitle("Sesion cajero");
+                vistaCajero.setLocationRelativeTo(null);
+                vistaCrearCliente.invalidate();
+                vistaCajero.isValidateRoot();
+                vistaCrearCliente.setVisible(false);
+                vistaCajero.setVisible(true);
+            }
+            
+        });
          
-        //variables para registrar cliente
-        String nombre = this.vistaCrearCliente.txt_nombre.getText().toString();
-        String apellido1 = this.vistaCrearCliente.txt_apellido1.getText().toString();
-        String apellido2 = this.vistaCrearCliente.txt_apellido2.getText().toString();
+          //Registrara nuevo cliente
+            //variables para registrar cliente
+            
+            this.vistaCrearCliente.btn_registrar.addActionListener(new ActionListener(){
+            @Override
+            //Abrir ventana crearCliente
+            public void actionPerformed(ActionEvent e) {
+                try{
+                    String nombre = vistaCrearCliente.txt_nombre.getText().toString();
+                    String apellido1 = vistaCrearCliente.txt_apellido1.getText().toString();
+                    String apellido2 = vistaCrearCliente.txt_apellido2.getText().toString();
+                    String correo = vistaCrearCliente.txt_correo.getText().toString();
+                    String usuario = vistaCrearCliente.txt_usuario.getText().toString();
+                    String contrasena = vistaCrearCliente.txt_contrasena.getText().toString();
+
+                    //Agregar cliente a base de datos
+                    //Crear nuevo usuario
+                        ArrayList<Usuario> uList = new ArrayList();
+                        Usuario usr = new Usuario(nombre,apellido1,apellido2,correo, usuario, contrasena,"cliente");
+                        uList.add(usr);
+                        BaseDatosUsuarios bd = BaseDatosUsuarios.getSingletonInstance(usr);
+
+                        for (int i = 0; i < bd.getUsuarios().size(); i++) {
+                            System.out.println(bd.getUsuarios().toString());
+
+                            }
+
+                }catch(Exception ex){
+                            JOptionPane.showMessageDialog(vistaCrearCliente, "Error verifique los datos ingresados");
+                }
+                
+            }
+            
+        });
         
+
     }
     
 
