@@ -225,8 +225,20 @@ public class Controlador implements ActionListener {
             }
             
         });
-        
-        //variables de ventana
+        // crear otro admin
+        vistaAdministrador.btn_agregarAdmin.addActionListener(new ActionListener(){
+            @Override
+            //Abrir ventana logIn
+            public void actionPerformed(ActionEvent e) {
+                vistaRegistro.setTitle("Log in");
+                vistaRegistro.setLocationRelativeTo(null);
+                vistaAdministrador.invalidate();
+                vistaRegistro.isValidateRoot();
+                vistaAdministrador.setVisible(false);
+                vistaRegistro.setVisible(true);
+            }
+            
+        });
         
         }
     
