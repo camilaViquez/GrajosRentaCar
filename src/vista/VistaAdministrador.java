@@ -29,15 +29,12 @@ public class VistaAdministrador extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         btn_crearAuto = new javax.swing.JButton();
-        btn_alquilarAuto = new javax.swing.JButton();
         btn_volver = new javax.swing.JButton();
         btn_agregarAdmin = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         btn_crearAuto.setText("Crear Automóvil");
-
-        btn_alquilarAuto.setText("Alquilar automóvil");
 
         btn_volver.setText("volver");
 
@@ -47,29 +44,24 @@ public class VistaAdministrador extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(69, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(74, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btn_crearAuto, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_alquilarAuto))
-                        .addGap(60, 60, 60))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btn_agregarAdmin)
-                        .addGap(27, 27, 27))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btn_volver)
-                        .addGap(98, 98, 98))))
+                    .addComponent(btn_crearAuto, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(btn_agregarAdmin)
+                            .addGap(27, 27, 27))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(btn_volver)
+                            .addGap(98, 98, 98)))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addComponent(btn_crearAuto)
-                .addGap(18, 18, 18)
-                .addComponent(btn_alquilarAuto)
-                .addGap(18, 18, 18)
+                .addGap(59, 59, 59)
                 .addComponent(btn_agregarAdmin)
                 .addGap(18, 18, 18)
                 .addComponent(btn_volver)
@@ -133,7 +125,6 @@ public class VistaAdministrador extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btn_agregarAdmin;
-    public javax.swing.JButton btn_alquilarAuto;
     public javax.swing.JButton btn_crearAuto;
     public javax.swing.JButton btn_volver;
     private javax.swing.JPanel jPanel1;

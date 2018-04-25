@@ -11,14 +11,20 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import modelo.Alquiler;
+import modelo.Automovil;
+import modelo.BaseDatosAlquiler;
+import modelo.BaseDatosCarro;
 import modelo.Usuario;
 import modelo.BaseDatosUsuarios;
 import vista.VistaLogIn;
 import vista.VistaRegistro;
 import vista.VistaAdministrador;
+import vista.VistaAlquiler;
 import vista.VistaCrearCliente;
 import vista.VistaCajero;
 import vista.VistaAuditor;
+import vista.VistaAutomovil;
 
 /**
  *
@@ -32,12 +38,16 @@ public class Controlador implements ActionListener {
     private VistaCrearCliente vistaCrearCliente = new VistaCrearCliente();
     private VistaCajero vistaCajero = new VistaCajero();
     private VistaAuditor vistaAuditor = new VistaAuditor();
+    private VistaAutomovil vistaAuto = new VistaAutomovil();
+    private Automovil auto= new Automovil();
+    private Alquiler alqu = new Alquiler();
+    private VistaAlquiler vistaAlquler = new VistaAlquiler();
+    
+    
+    
+    
 
-    
-    
-    
-
-    public Controlador(Usuario usuario, VistaLogIn vistaLogIn, VistaRegistro vistaRegistro, VistaAdministrador vistaAdministrador, VistaCrearCliente vistaCrearCliente, VistaCajero vistaCajero, VistaAuditor vistaAuditor) {
+    public Controlador(Usuario usuario, Automovil Auto, Alquiler alquiler,VistaLogIn vistaLogIn, VistaRegistro vistaRegistro, VistaAdministrador vistaAdministrador, VistaCrearCliente vistaCrearCliente, VistaCajero vistaCajero, VistaAuditor vistaAuditor,VistaAutomovil vistaCarro,VistaAlquiler vistaAlquiler) {
         this.usuario = usuario;
         this.vistaLogIn = vistaLogIn;
         this.vistaRegistro = vistaRegistro;
@@ -45,7 +55,10 @@ public class Controlador implements ActionListener {
         this.vistaCrearCliente = vistaCrearCliente;
         this.vistaCajero = vistaCajero;
         this.vistaAuditor = vistaAuditor;
-
+        this.vistaAuto = vistaCarro;
+        this.auto=  Auto;
+        this.alqu= alquiler;
+        this.vistaAlquler = vistaAlquiler;
     }
     
     //FUncion para inicializar la ventana principal
@@ -201,7 +214,10 @@ public class Controlador implements ActionListener {
         
         
     }
-    //Mostrar ventana del administrados
+   
+    
+
+//Mostrar ventana del administrados
     public void mostrarVistaAdministrador(){
         //Mostrar ventana nueva ocultar anterior
         vistaAdministrador.setTitle("sesion Administrador");
@@ -239,7 +255,72 @@ public class Controlador implements ActionListener {
             }
             
         });
-        
+                vistaAdministrador.btn_crearAuto.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                vistaAuto.setTitle("Registro de carros");
+                vistaAuto.setLocationRelativeTo(null);
+                vistaLogIn.invalidate();
+                vistaAuto.isValidateRoot();
+                vistaLogIn.setVisible(false);
+                vistaAuto.setVisible(true);
+            
+            }
+            
+        });
+              //Boton volver vista cajero
+          this.vistaAuto.btn_volver.addActionListener(new ActionListener(){
+            @Override
+            //Abrir ventana crearCliente
+            public void actionPerformed(ActionEvent e) {
+                vistaAdministrador.setTitle("Sesion cajero");
+                vistaAdministrador.setLocationRelativeTo(null);
+                vistaAuto.invalidate();
+                vistaAdministrador.isValidateRoot();
+                vistaAuto.setVisible(false);
+               vistaAdministrador.setVisible(true);
+            }
+            
+        });
+         
+          //Registrara nuevo cliente
+            //variables para registrar cliente
+            
+            this.vistaAuto.btn_registrar.addActionListener(new ActionListener(){
+            @Override
+            //Abrir ventana crearCliente
+            public void actionPerformed(ActionEvent e) {
+                try{
+                    String placa = vistaAuto.txt_placa.getText().toString();
+                    String tipo = vistaAuto.txt_tipo.getText().toString();
+                    String descripcion = vistaAuto.txt_Descripcion.getText().toString();
+                    //Agregar cliente a base de datos
+                    //Crear nuevo usuario
+                        ArrayList<Automovil> uList = new ArrayList();
+                        Automovil usr = new Automovil(placa,tipo,descripcion);
+                        uList.add(usr);
+                        BaseDatosCarro bd = BaseDatosCarro.getSingletonInstance(usr);
+
+                        for (int i = 0; i < bd.getAutos().size(); i++) {
+                            System.out.println(bd.getAutos().toString());
+
+                            }
+                        
+                        JOptionPane.showMessageDialog(vistaAuto, "Auto registrado");
+
+                }catch(Exception ex){
+                            JOptionPane.showMessageDialog(vistaAuto, "Error verifique los datos ingresados");
+                }
+               vistaAuto.txt_Descripcion.setText(null);
+               vistaAuto.txt_placa.setText(null);
+               vistaAuto.txt_tipo.setText(null);
+            }
+            
+        });  
+                
+                
+                
+                
         }
     
     
@@ -268,10 +349,8 @@ public class Controlador implements ActionListener {
             
         });
          
-         
-         
-         //Boton crear cliente
-          this.vistaCajero.btn_crearCliente.addActionListener(new ActionListener(){
+        //Boton crear cliente
+        this.vistaCajero.btn_crearCliente.addActionListener(new ActionListener() {
             @Override
             //Abrir ventana crearCliente
             public void actionPerformed(ActionEvent e) {
@@ -282,10 +361,10 @@ public class Controlador implements ActionListener {
                 vistaCajero.setVisible(false);
                 vistaCrearCliente.setVisible(true);
             }
-            
+
         });
-          //Boton volver vista cajero
-          this.vistaCrearCliente.btn_volver.addActionListener(new ActionListener(){
+        //Boton volver vista cajero
+        this.vistaCrearCliente.btn_volver.addActionListener(new ActionListener() {
             @Override
             //Abrir ventana crearCliente
             public void actionPerformed(ActionEvent e) {
@@ -296,17 +375,16 @@ public class Controlador implements ActionListener {
                 vistaCrearCliente.setVisible(false);
                 vistaCajero.setVisible(true);
             }
-            
+
         });
-         
-          //Registrara nuevo cliente
-            //variables para registrar cliente
-            
-            this.vistaCrearCliente.btn_registrar.addActionListener(new ActionListener(){
+
+        //Registrara nuevo cliente
+        //variables para registrar cliente
+        this.vistaCrearCliente.btn_registrar.addActionListener(new ActionListener() {
             @Override
             //Abrir ventana crearCliente
             public void actionPerformed(ActionEvent e) {
-                try{
+                try {
                     String nombre = vistaCrearCliente.txt_nombre.getText().toString();
                     String apellido1 = vistaCrearCliente.txt_apellido1.getText().toString();
                     String apellido2 = vistaCrearCliente.txt_apellido2.getText().toString();
@@ -316,18 +394,18 @@ public class Controlador implements ActionListener {
 
                     //Agregar cliente a base de datos
                     //Crear nuevo usuario
-                        ArrayList<Usuario> uList = new ArrayList();
-                        Usuario usr = new Usuario(nombre,apellido1,apellido2,correo, usuario, contrasena,"cliente");
-                        uList.add(usr);
-                        BaseDatosUsuarios bd = BaseDatosUsuarios.getSingletonInstance(usr);
+                    ArrayList<Usuario> uList = new ArrayList();
+                    Usuario usr = new Usuario(nombre, apellido1, apellido2, correo, usuario, contrasena, "cliente");
+                    uList.add(usr);
+                    BaseDatosUsuarios bd = BaseDatosUsuarios.getSingletonInstance(usr);
 
-                        for (int i = 0; i < bd.getUsuarios().size(); i++) {
-                            System.out.println(bd.getUsuarios().toString());
+                    for (int i = 0; i < bd.getUsuarios().size(); i++) {
+                        System.out.println(bd.getUsuarios().toString());
 
-                            }
+                    }
 
-                }catch(Exception ex){
-                            JOptionPane.showMessageDialog(vistaCrearCliente, "Error verifique los datos ingresados");
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(vistaCrearCliente, "Error verifique los datos ingresados");
                 }
                 vistaCrearCliente.txt_nombre.setText(null);
                 vistaCrearCliente.txt_apellido1.setText(null);
@@ -336,13 +414,91 @@ public class Controlador implements ActionListener {
                 vistaCrearCliente.txt_usuario.setText(null);
                 vistaCrearCliente.txt_contrasena.setText(null);
             }
-            
+
         });
-        
+
+        this.vistaCajero.btn_alquilarAuto.addActionListener(new ActionListener() {
+            @Override
+            //Abrir ventana crearAlquiler
+            public void actionPerformed(ActionEvent e) {
+                vistaAlquler.setTitle("Crear Alquiler");
+                vistaAlquler.setLocationRelativeTo(null);
+                vistaCajero.invalidate();
+                vistaAlquler.isValidateRoot();
+                vistaCajero.setVisible(false);
+                vistaAlquler.setVisible(true);
+            }
+
+        });
+        //Boton volver vista cajero
+        this.vistaAlquler.btn_volver.addActionListener(new ActionListener() {
+            @Override
+            //Abrir ventana crearCliente
+            public void actionPerformed(ActionEvent e) {
+                vistaCajero.setTitle("Sesion cajero");
+                vistaCajero.setLocationRelativeTo(null);
+                vistaAlquler.invalidate();
+                vistaCajero.isValidateRoot();
+                vistaAlquler.setVisible(false);
+                vistaCajero.setVisible(true);
+            }
+
+        });
+
+        this.vistaAlquler.btn_registrar.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    ArrayList<Alquiler> uList = new ArrayList();
+                    BaseDatosUsuarios db = BaseDatosUsuarios.getDbUsuario();
+                    ArrayList<Usuario> listaUsu = new ArrayList();
+                    listaUsu = db.getUsuarios();
+
+                    BaseDatosCarro dbc = BaseDatosCarro.getDbcarro();
+                    ArrayList<Automovil> listaC = new ArrayList();
+                    listaC = dbc.getAutos();
+
+                    String placa = vistaAlquler.txt_placa.getText().toString();
+                    String cliente = vistaAlquler.txt_cliente.getText().toString();
+                    for (Usuario u : listaUsu) {
+                        //Validar administrador
+                        if (cliente.equals(u.getUsuario())) {
+                            for (Automovil c : listaC) {
+                                if (placa.equals(c.getPlaca())) {
+                                    Alquiler alq = new Alquiler(placa, cliente);
+
+                                    uList.add(alq);
+                                    BaseDatosAlquiler bd = BaseDatosAlquiler.getSingletonInstance(alq);
+JOptionPane.showMessageDialog(vistaAlquler, "Alquiler Registrado");
+                                    for (int i = 0; i < bd.getAlquileres().size(); i++) {
+                                        System.out.println(bd.getAlquileres().toString());
+
+                                    }
+
+                                }
+                            }
+
+                        } else {
+                            
+                        }
+                    }
+
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(vistaAlquler, "Error verifique los datos ingresados");
+                }
+                vistaAlquler.txt_cliente.setText(null);
+                vistaAlquler.txt_placa.setText(null);
+            }
+
+        });
 
     }
-    
 
+
+    
+    
+    
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

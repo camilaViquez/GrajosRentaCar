@@ -49,14 +49,9 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="btn_crearCliente" min="-2" max="-2" attributes="0"/>
                       <Component id="btn_alquilarAuto" min="-2" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="btn_volver" min="-2" pref="101" max="-2" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <Component id="btn_crearCliente" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
+                      <Component id="btn_volver" min="-2" pref="101" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="88" max="32767" attributes="0"/>
               </Group>
@@ -79,7 +74,7 @@
       <SubComponents>
         <Component class="javax.swing.JButton" name="btn_crearCliente">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Crear Clinte"/>
+            <Property name="text" type="java.lang.String" value="Crear Cliente"/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
